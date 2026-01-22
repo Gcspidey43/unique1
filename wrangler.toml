@@ -14,6 +14,7 @@ upload_format = "service-worker"
 # For Next.js with API routes, we need to specify compatibility flags
 [env.production]
 compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
 
 # Define environment variables that may be needed
 [env.production.vars]
