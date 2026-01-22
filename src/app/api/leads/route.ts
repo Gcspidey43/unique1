@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { sendEmail, createLeadEmail } from '@/lib/email/email'
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic'; // Required for API routes that connect to database
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,8 +72,6 @@ export async function POST(request: NextRequest) {
     )
   }
 }
-
-export const runtime = 'edge';
 
 export async function GET() {
   try {
