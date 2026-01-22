@@ -8,7 +8,8 @@ NEXT_PUBLIC_SITE_URL = "https://unique-visa-consultancy.pages.dev"
 
 # Build settings for Cloudflare Pages
 [build]
-command = "npm install && npm run build"
+command = "npm ci && npm run build"
+upload_format = "service-worker"
 
 # For Next.js with API routes, we need to specify compatibility flags
 [env.production]
