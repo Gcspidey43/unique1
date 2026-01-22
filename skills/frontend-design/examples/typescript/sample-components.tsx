@@ -23,7 +23,7 @@ import { cn } from './utils'; // Utility for classname merging
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  buttonSize?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -33,7 +33,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       variant = 'primary',
-      size = 'md',
+      buttonSize = 'md',
       isLoading = false,
       disabled,
       leftIcon,
@@ -64,7 +64,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           baseClasses,
           variantClasses[variant],
-          sizeClasses[size],
+          sizeClasses[buttonSize],
           isLoading && 'btn-loading',
           className
         )}
@@ -108,7 +108,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
-  size?: 'sm' | 'md' | 'lg';
+  inputSize?: 'sm' | 'md' | 'lg';
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
@@ -119,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       label,
       error,
       helperText,
-      size = 'md',
+      inputSize = 'md',
       leftIcon,
       rightIcon,
       className,
@@ -146,20 +146,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        
+
         <div className="relative">
           {leftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
               {leftIcon}
             </div>
           )}
-          
+
           <input
             ref={ref}
             id={inputId}
             className={cn(
               'input',
-              sizeClasses[size],
+              sizeClasses[inputSize],
               error && 'input-error',
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',
@@ -169,20 +169,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-describedby={cn(errorId, helperId)}
             {...props}
           />
-          
+
           {rightIcon && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">
               {rightIcon}
             </div>
           )}
         </div>
-        
+
         {error && (
           <span id={errorId} className="helper-text helper-text-error" role="alert">
             {error}
           </span>
         )}
-        
+
         {!error && helperText && (
           <span id={helperId} className="helper-text">
             {helperText}

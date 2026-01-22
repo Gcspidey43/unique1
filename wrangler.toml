@@ -1,18 +1,19 @@
-name = visa
+name = "unique-visa-consultancy"
 compatibility_date = "2024-01-01"
 
-# Build settings
+# Environment variables for Cloudflare Pages
+[vars]
+NODE_VERSION = "20"
+NEXT_PUBLIC_SITE_URL = "https://unique-visa-consultancy.pages.dev"
+
+# Build settings for Cloudflare Pages
 [build]
-command = "bun run build"
+command = "npm install && npm run build"
 
-# Deployment settings
-[deploy]
-command = "npx wrangler pages deploy"
+# For Next.js with API routes, we need to specify compatibility flags
+[env.production]
+compatibility_flags = ["nodejs_compat"]
 
-# Route settings
-[route]
-# No custom route configuration needed - Cloudflare handles this automatically
-
-# Dev settings
-[dev]
-command = "npx wrangler pages dev"
+# Define environment variables that may be needed
+[env.production.vars]
+NODE_VERSION = "20"
