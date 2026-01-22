@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
 import { sendEmail, createLeadEmail } from '@/lib/email/email'
 
 export const runtime = 'edge';
-export const dynamic = 'force-dynamic'; // Required for API routes that connect to database
+export const dynamic = 'force-dynamic';
+
+// Mock storage for leads (in production, use Cloudflare D1 or external DB)
+let leadsDB: any[] = [];
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,17 +29,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create lead in database
-    const lead = await db.lead.create({
-      data: {
-        fullName,
-        phoneNumber,
-        email,
-        interestedVisaType,
-        preferredCountry,
-        message: message || null
-      }
-    })
+    // Create lead in mock database
+    const newLead = {
+      id: Date.now().toString(),
+      fullName,
+      phoneNumber,
+      email,
+      interestedVisaType,
+      preferredCountry,
+      message: message || null,
+      status: 'new',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    leadsDB.push(newLead);
 
     // Send email notification
     const emailHtml = createLeadEmail({
@@ -59,7 +65,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        leadId: lead.id,
+        leadId: newLead.id,
         emailSent: emailResult.success
       },
       { status: 201 }
@@ -75,13 +81,8 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const leads = await db.lead.findMany({
-      orderBy: {
-        createdAt: 'desc'
-      }
-    })
-
-    return NextResponse.json({ leads })
+    // Return leads from mock database
+    return NextResponse.json({ leads: leadsDB })
   } catch (error) {
     console.error('Error fetching leads:', error)
     return NextResponse.json(
