@@ -11,8 +11,8 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
-    "deploy:cloudflare": "bun run build && npx wrangler pages deploy",
-    "pages:build": "bun run build",
+    "deploy:cloudflare": "npm run build && npx wrangler pages deploy",
+    "pages:build": "npm run build",
     "pages:dev": "npx wrangler pages dev --proxy 3000"
   },
   "dependencies": {
@@ -95,6 +95,6 @@
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }

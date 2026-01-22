@@ -8,10 +8,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   experimental: {
-    serverActions: true,
     scrollRestoration: true,
   },
-  // Enable server components for edge runtime
   reactStrictMode: true,
 };
 
