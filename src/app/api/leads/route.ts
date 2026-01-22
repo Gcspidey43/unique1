@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { sendEmail, createLeadEmail } from '@/lib/email/email'
 
+export const runtime = 'edge';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -69,6 +71,8 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
+export const runtime = 'edge';
 
 export async function GET() {
   try {
