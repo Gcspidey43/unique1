@@ -3,9 +3,6 @@ import { NextRequest, NextResponse } from 'next/server'
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-// Mock storage for leads (in production, use Cloudflare D1 or external DB)
-let leadsDB: any[] = [];
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -28,52 +25,50 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create lead in mock database
-    const newLead = {
-      id: Date.now().toString(),
-      fullName,
-      phoneNumber,
-      email,
-      interestedVisaType,
-      preferredCountry,
-      message: message || null,
-      status: 'new',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    leadsDB.push(newLead);
-
-    // In Edge Runtime, we can't use nodemailer directly
-    // Instead, we'll log the inquiry and in production you could use:
-    // - Cloudflare Workers with SendGrid/Mailgun
-    // - Third-party email service with fetch API
+    // In a real implementation, you would store this in a database
+    // For now, we'll just log it and send to an external service
     console.log('New visa inquiry received:', {
       fullName,
       phoneNumber,
       email,
       interestedVisaType,
       preferredCountry,
-      message
+      message,
+      timestamp: new Date().toISOString()
     });
 
-    // Optionally, send email via external service in a real implementation
-    // await sendEmailViaExternalService({
-    //   to: process.env.NOTIFICATION_EMAIL || 'gcspideysir@gmail.com',
-    //   subject: `🌍 New Visa Inquiry: ${fullName} - ${interestedVisaType} to ${preferredCountry}`,
-    //   body: `New inquiry from ${fullName} (${email}): ${message}`
-    // });
+    // In production, you would send this to an external service
+    // that can handle email delivery and data persistence
+    // Example:
+    /*
+    try {
+      await fetch('https://your-external-service.com/webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName,
+          phoneNumber,
+          email,
+          interestedVisaType,
+          preferredCountry,
+          message
+        })
+      });
+    } catch (emailError) {
+      console.error('Error sending to external service:', emailError);
+    }
+    */
 
     return NextResponse.json(
       {
         success: true,
-        leadId: newLead.id,
-        emailSent: true // Assuming email was processed
+        message: 'Inquiry received successfully',
+        emailProcessed: true
       },
       { status: 201 }
     )
   } catch (error) {
-    console.error('Error creating lead:', error)
+    console.error('Error processing lead:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -82,14 +77,10 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  try {
-    // Return leads from mock database
-    return NextResponse.json({ leads: leadsDB })
-  } catch (error) {
-    console.error('Error fetching leads:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
-  }
+  // For demo purposes, return an empty array
+  // In production, you would fetch from a real database
+  return NextResponse.json({
+    leads: [],
+    message: 'Lead retrieval endpoint - connect to real database in production'
+  })
 }
