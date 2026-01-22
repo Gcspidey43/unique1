@@ -13,19 +13,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+export const metadata: Metadata = {
+  title: "Unique Visa Consultancy - Your Gateway to Global Opportunities",
+  description: "Professional visa consultancy services for Turkey, Germany, Schengen countries, USA, UK, and Australia. Expert guidance for student, visit, and business visas.",
+  keywords: ["visa consultancy", "student visa", "tourist visa", "business visa", "immigration services", "visa application"],
+  authors: [{ name: "Unique Visa Consultancy Team" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    title: "Unique Visa Consultancy",
+    description: "Professional visa services for global opportunities",
+    url: "https://unique1.pages.dev",
+    siteName: "Unique Visa Consultancy",
     type: "website",
   },
 };
